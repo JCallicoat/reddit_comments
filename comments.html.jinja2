@@ -47,17 +47,6 @@
     </style>
 </head>
 <body>
-  {% for c in comments %}
-  <div>
-    <h4>
-      {{ c.link_title }} -
-      <a href="http://reddit.com/r/{{ c.subname }}">/r/{{ c.subname }}</a>
-    </h4>
-    <span class="score">{{ c.score }}</span>:
-    <a href="{{ c.link_permalink }}">{{ c.posted }}</a>
-    {{ c.body_html }}
-  </div>
-  <hr/>
-  {% endfor %}
+
 </body>
 </html>
