@@ -1,52 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>{{ page_title }}</title>
-    <script type="application/javascript" src="http://code.jquery.com/jquery-3.2.1.slim.js"></script>
-    <script type="application/javascript">
-      $(function() {
-        for (var link of document.querySelectorAll('a')) {
-          if (link.href.search(/\.(jpg|jpeg|png|gif)/) > -1) {
-            var img = document.createElement('img');
-            img.setAttribute('src', 'plus.png');
-            img.setAttribute('rel', link.href);
-            link.parentNode.insertBefore(img, link.nextSibling);
-
-            img.addEventListener("click", function (evt) {
-              evt.preventDefault();
-              var img = evt.target;
-              src = img.getAttribute('src');
-              img.src = img.getAttribute('rel');
-              img.setAttribute('rel', src);
-              img.classList.toggle('big');
-            }, false);
-          }
-        }
-      });
-    </script>
-    <style type="text/css">
-      body {
-        font-family: sans-serif;
-        background-color: #1a2126;
-        color: #fffaf0;
-      }
-      a { color: #24a0ed; }
-      .score { color: green; }
-      div { margin-left: 20px; width: 80%; }
-      pre, code, blockquote { margin: 2px 0px; background-color: #2b3247; }
-      blockquote > p { padding: 4px; }
-      /*blockquote > p::before { content: '» '; }*/
-      img {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        margin-left: 4px;
-        vertical-align: text-top;
-      }
-      img.big { width: 400px; height: 400px; }
-    </style>
-</head>
-<body>
-
-</body>
-</html>
+{% for c in comments %}
+<div>
+  <h4>
+    {{ c.link_title }} -
+    <a href="http://reddit.com/r/{{ c.subname }}">/r/{{ c.subname }}</a>
+  </h4>
+  <span class="score">{{ c.score }}</span>:
+  <a href="{{ c.link_permalink }}">{{ c.posted }}</a>
+  {{ c.body_html }}
+</div>
+<hr/>
+{% endfor %}
