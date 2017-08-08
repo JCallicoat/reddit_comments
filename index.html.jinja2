@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ page_title }}</title>
+    <script type="application/javascript" src="http://code.jquery.com/jquery-3.2.1.slim.js"></script>
+    <script type="application/javascript">
+      $(function() {
+        for (var link of document.querySelectorAll('a')) {
+          if (link.href.search(/\.(jpg|jpeg|png|gif)/) > -1) {
+            var plus = document.createElement('img');
+            plus.setAttribute('class', 'plus');
+            plus.setAttribute('src', 'plus.png');
+            plus.setAttribute('rel', link.href);
+
+            var img = document.createElement('img');
+            img.setAttribute('class', 'hidden');
+            img.setAttribute('src', link.href);
+
+            link.parentNode.insertBefore(plus, link.nextSibling);
+            link.parentNode.insertBefore(img, plus.nextSibling);
+
+            plus.addEventListener('click', function (evt) {
+              evt.preventDefault();
+              var img = evt.target.nextSibling;
+              img.classList.toggle('hidden');
+            }, false);
+          }
+        }
+      });
+    </script>
+    <style type="text/css">
+      body {
+        font-family: sans-serif;
+        background-color: #1a2126;
+        color: #fffaf0;
+      }
+      a { color: #24a0ed; }
+      .score { color: green; }
+      div { margin-left: 20px; width: 80%; }
+      pre, code, blockquote { margin: 2px 0px; background-color: #2b3247; }
+      blockquote > p { padding: 4px; }
+      /*blockquote > p::before { content: '» '; }*/
+      img {
+        display: inline-block;
+        margin-left: 4px;
+        vertical-align: text-top;
+      }
+      img.plus {
+        width: 16px;
+        height: 16px;
+      }
+      img.hidden { display: none; }
+    </style>
+</head>
+<body>
+  {{ comments }}
+</body>
+</html>
