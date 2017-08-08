@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{{ page_title }}</title>
+    <title>{{ username }} Reddit Comments</title>
     <script type="application/javascript" src="http://code.jquery.com/jquery-3.2.1.slim.js"></script>
     <script type="application/javascript">
       $(function() {
+        var ytregx = /watch\?v\=(.+)/;
         for (var link of document.querySelectorAll('a')) {
           if (link.href.search(/\.(jpg|jpeg|png|gif)/) > -1) {
             var plus = document.createElement('img');
@@ -25,31 +26,68 @@
               img.classList.toggle('hidden');
             }, false);
           }
+          if (matches = ytregx.exec(link.href)) {
+            var plus = document.createElement('img');
+            plus.setAttribute('class', 'plus');
+            plus.setAttribute('src', 'plus.png');
+            plus.setAttribute('rel', link.href);
+
+            var iframe = document.createElement('iframe');
+            iframe.setAttribute('class', 'hidden');
+            iframe.setAttribute('src', 'https://www.youtube.com/embed/' +
+                                        matches[1]);
+
+            link.parentNode.insertBefore(plus, link.nextSibling);
+            link.parentNode.insertBefore(iframe, plus.nextSibling);
+
+            plus.addEventListener('click', function (evt) {
+              evt.preventDefault();
+              var img = evt.target.nextSibling;
+              img.classList.toggle('hidden');
+            }, false);
+          }
         }
       });
     </script>
     <style type="text/css">
       body {
         font-family: sans-serif;
+        font-size: 1em;
+        font-weight: 400;
         background-color: #1a2126;
         color: #fffaf0;
       }
       a { color: #24a0ed; }
       .score { color: green; }
-      div { margin-left: 20px; width: 80%; }
-      pre, code, blockquote { margin: 2px 0px; background-color: #2b3247; }
+      div { margin: 20px; width: 80%; }
+      .comment {
+        padding: 0px 10px;
+        border: 1px solid #545454;
+        border-radius: 5px;
+      }
+      pre, code {
+        padding: 2px;
+        background-color: #2b3237;
+        line-height: 1.6em;
+      }
+      blockquote {
+        margin: 4px 0px;
+        padding-left: 4px;
+        border-left: 2px solid #fffaf0;
+      }
       blockquote > p { padding: 4px; }
       /*blockquote > p::before { content: '» '; }*/
-      img {
+      iframe { width: 800px; height: 400px; }
+      img, iframe {
         display: inline-block;
         margin-left: 4px;
         vertical-align: text-top;
       }
-      img.plus {
+      .plus {
         width: 16px;
         height: 16px;
       }
-      img.hidden { display: none; }
+      .hidden { display: none; }
     </style>
 </head>
 <body>

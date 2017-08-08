@@ -1,5 +1,5 @@
 {% for c in comments %}
-<div>
+<div class="comment">
   <h4>
     {{ c.link_title }} -
     <a href="http://reddit.com/r/{{ c.subname }}">/r/{{ c.subname }}</a>
@@ -8,5 +8,4 @@
   <a href="{{ c.link_permalink }}">{{ c.posted }}</a>
   {{ c.body_html }}
 </div>
-<hr/>
 {% endfor %}
